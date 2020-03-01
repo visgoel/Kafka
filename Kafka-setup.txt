@@ -1,0 +1,33 @@
+-- Change the below 2 config files with appropriate windows directory
+-- 1. zookeeper.properties
+-- 2. server.properties
+
+-- Start Zookeeper
+cd C:\BigDataLocal\kafka\bin\windows
+zookeeper-server-start.bat C:\BigDataLocal\kafka\config\zookeeper.properties
+-- INFO binding to port 0.0.0.0/0.0.0.0:2181
+
+
+-- Start Kafka Broker/Server
+cd C:\BigDataLocal\kafka\bin\windows
+
+kafka-server-start.bat C:\BigDataLocal\kafka\config\server.properties
+-- INFO Awaiting socket connections on 0.0.0.0:9092. (kafka.network.Acceptor)
+
+
+-- Create Kafka Topic
+cd C:\BigDataLocal\kafka\bin\windows
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic testtopic
+
+-- List Kafka Topic
+kafka-topics.bat --list --zookeeper localhost:2181
+
+
+--Start Producer
+kafka-console-producer.bat --broker-list localhost:9092 --topic testtopic
+
+
+-- Start Consumer
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic testtopic --from-beginning
+
+
